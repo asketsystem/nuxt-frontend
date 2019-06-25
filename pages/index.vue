@@ -1,35 +1,36 @@
 <template>
   <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        nuxtfrontend
-      </h1>
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+    <Navigation />
+    <div class="container__content">
+      <h1>Please select a page you wish to view</h1>
+      <p>This is a website for demo purposes of using Nuxt & Contentful together</p>
     </div>
   </section>
 </template>
-
 <script>
-import AppLogo from '~/components/AppLogo.vue'
-
+import Navigation from '../components/Navigation';
+import {createClient} from '../plugins/contentful';
+const contentfulClient = createClient();
 export default {
-  components: {
-    AppLogo
+    components: {
+      Navigation
+    },
+    asyncData ({env}) {
+      return Promise.all([
+        // fetch all blog posts sorted by creation date
+        contentfulClient.getEntries({
+          'content_type': 'page',
+          order: '-sys.createdAt'
+        })
+      ]).then(([pages]) => {
+        // return data that should be available
+        // in the template
+        return {
+          pages: pages.items
+        }
+      }).catch(console.error)
+    }
   }
-}
 </script>
 
 <style>

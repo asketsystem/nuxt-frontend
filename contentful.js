@@ -1,6 +1,8 @@
 const contentful = require('contentful');
+import { createClient } from '../plugins/contentful';
+const contentfulClient = createClient();
 
-//use default environment 
+//use default environment
 
 const config = {
     space: Process.env.CTF_SPACE_ID,
@@ -14,3 +16,4 @@ module.exports = {
             )
     }
 }
+
