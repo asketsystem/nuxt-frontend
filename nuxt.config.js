@@ -1,4 +1,5 @@
 module.exports = {
+
   /*
   ** Headers of the page
   */
@@ -37,3 +38,18 @@ module.exports = {
   }
 }
 
+// ./nuxt.config.js
+const config = require('./contentful.json')
+
+module.exports = {
+  //...
+  env: {
+    CTF_SPACE_ID:
+  config.CTF_SPACE_ID,
+    CTF_CDA_ACCESS_TOKEN:
+  config.CTF_CDA_ACCESS_TOKEN,
+    CTF_ENVIRONMENT:
+  config.CTF_ENVIRONMENT
+  }
+  //...
+}
